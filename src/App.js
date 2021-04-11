@@ -1,7 +1,9 @@
+/*Importando React e ícone*/
 import React, { useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 
-import "bootstrap/dist/css/bootstrap.min.css"; //https://react-bootstrap.github.io/
+/*Importando Bootstrap e alguns de seus itens*/
+import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Jumbotron from "react-bootstrap/Jumbotron";
@@ -12,17 +14,17 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 
 function App() {
-  const [usuario, setUsuario] = useState("");
-  const [dados, setDados] = useState("");
+  const [usuario, setUsuario] = useState(""); //Armazena o nome digitado pelo usuário.
+  const [dados, setDados] = useState(""); //Armazena os dados do usuário.
 
+  /*Realiza o processamento dos dados do usuário.*/
   async function obtemUsuario(usuario) {
     let url = `https://api.github.com/users/${usuario}`;
-    const api_geo = process.env.REACT_APP_API_GEO;
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setDados(data)
+        setDados(data);
       })
       .catch((error) =>
         console.error(`Erro ao obter usuário. Erro: ${error.message}`)
@@ -31,26 +33,35 @@ function App() {
 
   return (
     <React.Fragment>
-      {/*Navbar superior*/}
+      {/*Navbar superior - apresenta o nome do projeto, contato e documentação.*/}
       <Navbar bg="secondary">
-        <Navbar.Brand href="#documentacao">FatecHub</Navbar.Brand>
+        <Navbar.Brand>InfoHub</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#inicio">Início</Nav.Link>
-          <Nav.Link href="#contato">Contato</Nav.Link>
-          <Nav.Link href="#documentacao">Documentação</Nav.Link>
+          <Nav.Link
+            href="https://github.com/andre-alck"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Contato
+          </Nav.Link>
+          <Nav.Link
+            href="https://github.com/andre-alck/infohub/blob/main/README.md"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Documentação
+          </Nav.Link>
         </Nav>
 
-        {/*Formulário direita*/}
+        {/*Formulário direita - caixa onde o usuário digita o username desejado.*/}
         <Form inline>
           <FormControl
             type="text"
             value={usuario}
             onChange={(event) => setUsuario(event.target.value)}
           />
-
           &nbsp;
-
-          {/*Botão pesquisar usuário*/}
+          {/*Botão pesquisar usuário - executa função obtemUsuario, começando o processamento dos dados.*/}
           <Button
             variant="dark"
             onClick={() => {
@@ -58,43 +69,48 @@ function App() {
             }}
             disabled={usuario < 1}
           >
-            Pesquisar usuário <BsFillPersonFill/>
+            Pesquisar usuário <BsFillPersonFill />
           </Button>
         </Form>
       </Navbar>
 
-      {/*Jumbotron*/}
+      {/*Jumbotron - Descrição básica do projeto.*/}
       <Jumbotron>
         <h1>
-        <BsFillPersonFill/> FatecHub
+          <BsFillPersonFill /> InfoHub
         </h1>
         <p>
-          Descrição projeto. <br></br>
-          App desenvolvido em ReactJS e integrado com a [API do GitHub].
+          Projeto realizado utilizando a API do GitHub com base em React e
+          Bootstrap.<br></br>
+          Digite o nome do usuário desejado no formulário e, em seguida, clique
+          no botão "Pesquisar usuário {<BsFillPersonFill />}".
         </p>
       </Jumbotron>
 
-      {/*Row*/}
-      <Row className="justify-content-center">
+      {dados && (
+        <Row className="justify-content-center">
+          {/*Card - Localização dos dados do usuário.*/}
+          <Card bg="secondary">
+            <Card.Header>
+              <strong>Nome: </strong>
+              {dados.name}
+            </Card.Header>
 
-        {/*Card*/}
-        <Card bg="secondary">
-          <Card.Header>
-           <strong>Nome: </strong>{dados.name}
-          </Card.Header>
+            <Card.Body>
+              <strong>Perfil:</strong>
+              <Card.Img src={`${dados.avatar_url}`}></Card.Img>
+            </Card.Body>
 
-          <Card.Body>
-          <strong>Perfil:</strong>
-            <Card.Img src={`${dados.avatar_url}`}></Card.Img>
-          </Card.Body>
+            <Card.Footer>
+              <strong>Link Github: </strong>
+              <a href={dados.html_url} target="_blank" rel="noreferrer">
+                {dados.html_url}
+              </a>
+            </Card.Footer>
+          </Card>
+        </Row>
+      )}
 
-          <Card.Footer>
-            <strong>Link Github: </strong>
-            <a href={dados.html_url} target="_blank" rel="noreferrer">{dados.html_url}</a>
-          </Card.Footer>
-        </Card>
-
-      </Row>
     </React.Fragment>
   );
 }
