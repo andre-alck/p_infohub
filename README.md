@@ -1,6 +1,10 @@
-# Como funciona
+# Como Funciona
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. InfoHub foi desenvolvido utilizando React (versão 17.0.2), Boostrap (versão 5.0), e a API de cada usuário fornecida pelo GitHub.
+2. Uma estrutura de useState gravará o nome de usuário digitado numa variável chamada "usuario".
+3. Ao pesquisar o usuário, uma função assíncrona obtemUsuario será executada, adicionando o valor de usuário ao link da API. (let url = `https://api.github.com/users/${usuario}`;)
+4. A função obtemUsuario realizará o processamento dos dados recebidos da API e, depois de tratados, uma estrutura useState gravará estes dados numa variável chamada "dados".
+5. As informações do usuário são apresentadas dentro de um Card (importado do Bootstrap).
 
 ## Available Scripts
 
