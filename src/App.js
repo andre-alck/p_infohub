@@ -13,6 +13,8 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 
+import logo from "../src/logo.png"
+
 function App() {
   const [usuario, setUsuario] = useState(""); //Armazena o nome digitado pelo usuário.
   const [dados, setDados] = useState(""); //Armazena os dados do usuário.
@@ -76,9 +78,7 @@ function App() {
 
       {/*Jumbotron - Descrição básica do projeto.*/}
       <Jumbotron>
-        <h1>
-          <BsFillPersonFill /> InfoHub
-        </h1>
+      <img src={logo} alt="logo_image"/>
         <p>
           Projeto realizado utilizando a API do GitHub com base em React e
           Bootstrap.<br></br>
