@@ -13,7 +13,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 
-import logo from "../src/logo.png"
+import logo from "../src/logo.png";
 
 function App() {
   const [usuario, setUsuario] = useState(""); //Armazena o nome digitado pelo usuário.
@@ -25,13 +25,19 @@ function App() {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setDados(data);
       })
       .catch((error) =>
         console.error(`Erro ao obter usuário. Erro: ${error.message}`)
       );
   }
+
+  const verificaEnter = (event) => {
+    if (event.code === "Enter") {
+      event.preventDefault();
+      obtemUsuario(usuario);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -56,7 +62,7 @@ function App() {
         </Nav>
 
         {/*Formulário direita - caixa onde o usuário digita o username desejado.*/}
-        <Form inline>
+        <Form inline onKeyDown={(e) => verificaEnter(e)}>
           <FormControl
             type="text"
             value={usuario}
@@ -78,7 +84,7 @@ function App() {
 
       {/*Jumbotron - Descrição básica do projeto.*/}
       <Jumbotron>
-      <img src={logo} alt="logo_image"/>
+        <img src={logo} alt="logo_image" />
         <p>
           Projeto realizado utilizando a API do GitHub com base em React e
           Bootstrap.<br></br>
@@ -110,7 +116,6 @@ function App() {
           </Card>
         </Row>
       )}
-
     </React.Fragment>
   );
 }
