@@ -25,7 +25,16 @@ function App() {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
+          switch(data.cod)
+          {
+              case "404":
+                  console.log("erro 404");
+                  break;
+
+              default:
         setDados(data);
+                  break;
+          }
       })
       .catch((error) =>
         console.error(`Erro ao obter usuário. Erro: ${error.message}`)
